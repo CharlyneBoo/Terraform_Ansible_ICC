@@ -1,0 +1,17 @@
+variable "bdd_id" {}
+variable "bdd_name" {}
+variable "bdd_ip_address" {}
+variable "bdd_ip_mask" {}
+variable "node_name" {}
+variable "bdd_memory" {}
+variable "bdd_cpu" {}
+variable "bdd_network_name" {}
+variable "bdd_interface_disk" {}
+variable "bdd_datastore" {}
+variable "bdd_iso" {}
+variable "bdd_disk_size" {}
+variable "bdd_gateway" {}
+variable "bdd_login" {}
+variable "bdd_password" {}
+variable "bdd_os_type" {}
+variable "ssh_keys" {}

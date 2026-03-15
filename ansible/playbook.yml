@@ -1,0 +1,14 @@
+---
+- name: Configuration BDD
+  hosts: bdd  
+  become: true
+  vars:
+    ansible_pipelining: true
+  roles:
+    - bdd
+
+- name: Configuration APP
+  hosts: app  
+  become: true
+  roles:
+    - app

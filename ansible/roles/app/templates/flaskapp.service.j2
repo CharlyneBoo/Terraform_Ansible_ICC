@@ -1,0 +1,12 @@
+[Unit]
+Description=API Flask Cytech
+After=network.target
+
+[Service]
+User={{ app_user }}
+WorkingDirectory={{ app_directory }}
+ExecStart={{ app_directory }}/venv/bin/gunicorn --bind 0.0.0.0:{{ app_port }} app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

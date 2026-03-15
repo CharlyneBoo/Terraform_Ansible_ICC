@@ -1,0 +1,17 @@
+variable "app_id" {}
+variable "app_name" {}
+variable "app_ip_address" {}
+variable "app_ip_mask" {}
+variable "node_name" {}
+variable "app_memory" {}
+variable "app_cpu" {}
+variable "app_network_name" {}
+variable "app_interface_disk" {}
+variable "app_datastore" {}
+variable "app_iso" {}
+variable "app_disk_size" {}
+variable "app_gateway" {}
+variable "app_login" {}
+variable "app_password" {}
+variable "app_os_type" {}
+variable "ssh_keys" {}

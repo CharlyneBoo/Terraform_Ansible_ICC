@@ -1,0 +1,29 @@
+from flask import Flask
+import psycopg2
+
+app = Flask(__name__)
+
+@app.route("/")
+def get_name():
+    try:
+        conn = psycopg2.connect(
+            dbname="{{dbname}}",
+            user="{{user}}",
+            password="{{password}}",
+            host="{{host}}"
+        )
+        cur = conn.cursor()
+        
+        cur.execute("SELECT name FROM {{user}} LIMIT 1;")
+        record = cur.fetchone()
+        
+        cur.close()
+        conn.close()
+        
+        if record:
+            return f"hello {record[0]}"
+        else:
+            return "hello inconnu (Aucune donnée)"
+            
+    except Exception as e:
+        return f"Erreur de connexion : {str(e)}"

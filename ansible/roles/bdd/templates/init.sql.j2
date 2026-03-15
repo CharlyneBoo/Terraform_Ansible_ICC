@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS {{ bdd_user }} (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+ALTER TABLE {{ bdd_user }} OWNER TO {{ bdd_user }};
+
+INSERT INTO {{ bdd_user }} (name) 
+SELECT '{{ bdd_prenom }}'
+WHERE NOT EXISTS (
+    SELECT 1 FROM {{ bdd_user }} WHERE name = '{{ bdd_prenom }}'
+);

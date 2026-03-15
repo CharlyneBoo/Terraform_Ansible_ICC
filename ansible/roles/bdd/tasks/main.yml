@@ -1,0 +1,76 @@
+---
+- name: Installation package Prostgre SQL
+  ansible.builtin.apt:
+    name: 
+      - postgresql
+      - postgresql-contrib
+      - python3-psycopg2
+    state: present
+    update_cache: true
+
+- name: Group creation
+  ansible.builtin.group: 
+    name: "{{ bdd_group }}"
+    state: present
+  
+- name: User creation
+  ansible.builtin.user:
+    name: "{{ bdd_user }}"
+    password: "{{ bdd_password }}"
+    groups: "{{ bdd_group }}"
+
+- name: Create BDD user
+  community.postgresql.postgresql_user:
+    name: "{{ bdd_user }}"
+    password: "{{ bdd_password }}"
+  become_user: postgres
+
+- name: Create BDD
+  community.postgresql.postgresql_db:
+    name: "{{ bdd_name }}"
+    owner: "{{ bdd_user }}"
+  become_user: postgres
+
+- name: Autorize PostgreSQL
+  ansible.builtin.lineinfile:
+    path: "/etc/postgresql/14/main/postgresql.conf"
+    regexp: "^#?listen_addresses ="
+    line: "listen_addresses = '*'" 
+  become: true
+
+- name: Autorize only localhost
+  community.postgresql.postgresql_pg_hba:
+    dest: "/etc/postgresql/14/main/pg_hba.conf"
+    contype: host
+    databases: "{{ bdd_name }}"
+    users: all
+    address: 127.0.0.1/32
+  become_user: postgres
+
+- name: Autorize only App machine
+  community.postgresql.postgresql_pg_hba:
+    dest: "/etc/postgresql/14/main/pg_hba.conf"
+    contype: host
+    databases: "{{ bdd_name }}"
+    users: all
+    source: "{{ app_machine_ip }}"
+  become_user: postgres
+
+- name: Copy template on virtual machine
+  ansible.builtin.template:
+    src: ../templates/init.sql.j2
+    dest: /tmp/init_bdd.sql
+
+- name: Exec SQL script
+  community.postgresql.postgresql_query:
+    db: "{{ bdd_name }}"
+    path_to_script: /tmp/init_bdd.sql
+    as_single_query: true
+  become_user: postgres
+
+- name: Restart PostgreSQL
+  ansible.builtin.service:
+    name: postgresql
+    state: restarted
+
+
