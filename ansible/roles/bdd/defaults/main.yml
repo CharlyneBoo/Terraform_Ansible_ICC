@@ -2,7 +2,7 @@
 bdd_name: cytech
 bdd_user: cytech_usr
 bdd_group: cytech_grp
-bdd_password: "password"
+bdd_password: ""
 bdd_machine_ip: "192.168.100.141"
 bdd_prenom: charlyne
 

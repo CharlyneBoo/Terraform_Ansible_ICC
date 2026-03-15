@@ -86,3 +86,10 @@ variable "file_ssh_pub" {
   type = string
 }
 
+variable "username_prox" {
+  type = string
+}
+
+variable "password_prox" {
+  type = string
+}

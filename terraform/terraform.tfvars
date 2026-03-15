@@ -24,3 +24,6 @@ vm_bdd_memory     = 2048
 
 file_ssh_pub   = "/home/cytech/.ssh/id_ed25519.pub"
 file_ssh_prive = "/home/cytech/.ssh/id_ed25519"
+
+username_prox = ""
+password_prox = ""
